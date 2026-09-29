@@ -655,7 +655,7 @@ export function enforceMasterKeyAccess(req, res, next) {
   next();
 }
 
-export function promiseEnforceMasterKeyAccess(request) {
+export function promiseRequireMasterKeyAccess(request) {
   if (!request.auth.isMaster) {
     throw createSanitizedHttpError(403, 'unauthorized: master key is required', request.config);
   }
