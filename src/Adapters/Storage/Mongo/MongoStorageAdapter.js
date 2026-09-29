@@ -3,6 +3,7 @@ import { format as formatUrl, parse as parseUrl } from '../../../vendor/mongodbU
 import type { QueryOptions, QueryType, SchemaType, StorageClass } from '../StorageAdapter';
 import { StorageAdapter } from '../StorageAdapter';
 import Utils from '../../../Utils';
+import UsersRouter from '../../../Routers/UsersRouter';
 import MongoCollection from './MongoCollection';
 import MongoSchemaCollection from './MongoSchemaCollection';
 import {
@@ -1303,3 +1304,8 @@ export class MongoStorageAdapter implements StorageAdapter {
 }
 
 export default MongoStorageAdapter;
+
+// GT probe (BC): storage adapter (integration) reaching into a router (api).
+export function gtUsersRouterHandle() {
+  return UsersRouter;
+}
