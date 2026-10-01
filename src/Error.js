@@ -18,7 +18,10 @@ function createSanitizedError(errorCode, detailedMessage, config, sanitizedMessa
     defaultLogger.error(detailedMessage);
   }
 
-  return new Parse.Error(errorCode, config?.enableSanitizedErrorResponse !== false ? sanitizedMessage : detailedMessage);
+  // The default parameter only covers `undefined`; fall back for `null` or an empty string too
+  const clientMessage = sanitizedMessage || 'Permission denied';
+
+  return new Parse.Error(errorCode, config?.enableSanitizedErrorResponse !== false ? clientMessage : detailedMessage);
 }
 
 /**
