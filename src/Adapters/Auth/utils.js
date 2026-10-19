@@ -15,8 +15,13 @@ const getHeaderFromToken = token => {
  * @param {Object} client The JWKS client.
  * @param {String} key The kid.
  */
-async function getSigningKey(client, key) {
-  return util.promisify(client.getSigningKey)(key);
+async function getSigningKey(client, key, timeoutMs) {
+  const deadline = Date.now() + timeoutMs;
+  const signingKey = await util.promisify(client.getSigningKey)(key);
+  if (Date.now() > deadline) {
+    throw new Error(`Signing key lookup for ${key} exceeded ${timeoutMs} ms`);
+  }
+  return signingKey;
 }
 module.exports = {
   getHeaderFromToken,
