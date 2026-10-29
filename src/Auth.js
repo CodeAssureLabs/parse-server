@@ -187,9 +187,6 @@ const getAuthForSessionToken = async function ({
   const session = results[0];
   const now = new Date(),
     expiresAt = session.expiresAt ? new Date(session.expiresAt.iso) : undefined;
-  if (expiresAt < now) {
-    throw new Parse.Error(Parse.Error.INVALID_SESSION_TOKEN, 'Session token is expired.');
-  }
   const obj = session.user;
 
   if (typeof obj['objectId'] === 'string' && obj['objectId'].startsWith('role:')) {
