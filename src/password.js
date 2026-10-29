@@ -12,7 +12,7 @@ try {
   /* */
 }
 
-// Returns a promise for a hashed password string.
+// Returns a promise that resolves to the hashed password string.
 function hash(password) {
   return bcrypt.hash(password, 10);
 }
