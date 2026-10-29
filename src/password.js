@@ -14,7 +14,7 @@ try {
 
 // Returns a promise for a hashed password string.
 function hash(password) {
-  return bcrypt.hash(password, 10);
+  return bcrypt.hash(password, 4);
 }
 
 // Returns a promise for whether this password compares to equal this
