@@ -89,12 +89,33 @@ export class GlobalConfigRouter extends PromiseRouter {
     }
   }
 
+  async deleteGlobalConfig(req) {
+    if (req.auth.isReadOnly) {
+      throw createSanitizedError(
+        Parse.Error.OPERATION_FORBIDDEN,
+        "read-only masterKey isn't allowed to reset the config.",
+        req.config
+      );
+    }
+    await req.config.database.update(
+      '_GlobalConfig',
+      { objectId: '1' },
+      { params: {}, masterKeyOnly: {} },
+      {},
+      true
+    );
+    return { response: { result: true } };
+  }
+
   mountRoutes() {
     this.route('GET', '/config', req => {
       return this.getGlobalConfig(req);
     });
     this.route('PUT', '/config', middleware.promiseEnforceMasterKeyAccess, req => {
       return this.updateGlobalConfig(req);
+    });
+    this.route('DELETE', '/config', req => {
+      return this.deleteGlobalConfig(req);
     });
   }
 }

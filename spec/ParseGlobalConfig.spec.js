@@ -57,6 +57,23 @@ describe('a GlobalConfig', () => {
     });
   });
 
+  it('config can be reset via DELETE', done => {
+    request({
+      method: 'DELETE',
+      url: 'http://localhost:8378/1/config',
+      json: true,
+      headers,
+    }).then(response => {
+      try {
+        expect(response.status).toEqual(200);
+        expect(response.data.result).toEqual(true);
+      } catch (e) {
+        jfail(e);
+      }
+      done();
+    });
+  });
+
   it('internal parameter can be retrieved with master key', done => {
     request({
       url: 'http://localhost:8378/1/config',
